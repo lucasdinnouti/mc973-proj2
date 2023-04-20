@@ -8,6 +8,6 @@ class BUS:
     def load(self, addr, size) -> int:
         return self.dram.load(addr, size)
 
-    def storre(self, addr, size, value):
+    def store(self, addr, size, value):
         self.dram.store(addr, size, value)
 
