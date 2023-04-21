@@ -1,4 +1,3 @@
-
 class LogInfo:
 
     def __init__(self) -> None:

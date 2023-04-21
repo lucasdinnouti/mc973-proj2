@@ -26,11 +26,14 @@ def main():
     
     while True:
         log_info = LogInfo()
+        log_info.set_pc(cpu.pc)
+
         instr = cpu.fetch()
+        log_info.set_instr(instr)
 
         cpu.pc += 4
 
-        if not cpu.execute(instr):
+        if not cpu.execute(instr, log_info):
             break
         
         if cpu.pc == 0:
