@@ -1,3 +1,16 @@
+LUI    = 0b0110111
+AUIPC  = 0b0010111 
+JAL    = 0b1101111 
+JALR   = 0b1100111 
+LOAD   = 0b0000011
+FENCE  = 0b0001111
+
+B_TYPE = 0b1100011
+R_TYPE = 0b0110011
+I_TYPE = 0b0010011
+C_TYPE = 0b1110011
+S_TYPE = 0b0100011
+
 from modules.BUS import BUS
 
 class CPU:
@@ -40,7 +53,7 @@ class CPU:
             | ((instr >> 20) & 0x7e0) \
             | ((instr >> 7) & 0x1e)
 
-    def imm_B(self, instr) -> int:
+    def imm_U(self, instr) -> int:
         return instr & 0xfffff999
 
     def imm_J(self, instr) -> int:

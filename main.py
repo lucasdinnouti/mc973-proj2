@@ -1,4 +1,5 @@
 from modules.CPU import CPU 
+from utils.Logger import Logger, LogInfo
 
 import sys
 
@@ -17,12 +18,14 @@ def read_program(path):
 
 def main():
     cpu = CPU()
+    logger = Logger()
 
     program_path = sys.argv[0]
     program = read_program(program_path)
     cpu.store_program(program)
     
     while True:
+        log_info = LogInfo()
         instr = cpu.fetch()
 
         cpu.pc += 4
@@ -32,6 +35,8 @@ def main():
         
         if cpu.pc == 0:
             break
+
+        logger.log(log_info.to_string())
 
 if __name__ == "__main__":
     sys.exit(main())
