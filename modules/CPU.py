@@ -12,3 +12,7 @@ class CPU:
     
     def execute(self, instr) -> int:
         return 0
+    
+    def store_program(self, program):
+        for i, inst in enumerate(program):
+            self.bus.store(i, 32, inst)

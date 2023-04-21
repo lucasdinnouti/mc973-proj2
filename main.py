@@ -15,16 +15,12 @@ def read_program(path):
 
     return content
 
-def copy_program_to_memory(program, cpu):
-    for i, inst in enumerate(program):
-        cpu.bus.dram.mem[i] = inst
-
 def main():
     cpu = CPU()
 
     program_path = sys.argv[0]
     program = read_program(program_path)
-    copy_program_to_memory(program, cpu)
+    cpu.store_program(program)
     
     while True:
         instr = cpu.fetch()
