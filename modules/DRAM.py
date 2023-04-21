@@ -29,7 +29,7 @@ class DRAM:
         if size == 64:
             return self._store_64(addr, value)
 
-        raise Exception("Invalid load size")
+        raise Exception("Invalid store size")
 
 #### Private functions
 
