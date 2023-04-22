@@ -4,7 +4,10 @@ from services.Decoder import Decoder
 import utils.Constants as const
 
 class ITypeStrategy(ExecutionStrategy):
-    def execute(self, instr, funct3, funct7, log_info: LogInfo) -> int:
+    def execute(self, instr, log_info: LogInfo) -> int:
+        funct3 = Decoder.funct3(instr)
+        funct7 = Decoder.funct7(instr)
+    
         if funct3 == const.ADDI:
             self.exec_ADDI(instr, log_info)
         elif funct3 == const.SLLI:
@@ -119,7 +122,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.regs[rd])
         log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_disassembly(f'slli x{rd}, x{rs1}, {shit_amount}')
+        log_info.set_disassembly(f'srai x{rd}, x{rs1}, {shit_amount}')
 
     def exec_ORI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
