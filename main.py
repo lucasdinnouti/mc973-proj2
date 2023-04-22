@@ -21,7 +21,8 @@ def main():
     logger = Logger()
 
     program_path = sys.argv[0]
-    program = read_program(program_path)
+    program = [0b00000000000100000000000010010011, 0b00000000001100001000000110010011]
+    #program = read_program(program_path)
     cpu.store_program(program)
     
     while True:
