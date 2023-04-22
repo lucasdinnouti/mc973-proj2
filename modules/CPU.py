@@ -45,7 +45,7 @@ class CPU:
         else:
             raise Exception('Cannot decode instruction type')
 
-        return 0
+        return 1
     
     def execute_LUI(self, funct3, funct7):
         pass
@@ -141,7 +141,7 @@ class CPU:
     
     def store_program(self, program):
         for i, instr in enumerate(program):
-            self.bus.store(i, 32, instr)
+            self.bus.store(i * 4, 32, instr)
 
 #### Decoding instructions
 

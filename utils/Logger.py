@@ -37,14 +37,28 @@ class LogInfo:
         self.disassembly = disassembly
 
     def to_hex(self, value):
-        return hex(value).split('x')[1]
+        return hex(value).split('x')[1].zfill(8)
     
+    def rd_to_string(self):
+        if self.rd != '':
+            return f'x{self.rd}={self.rd_value} '
+        
+        return ''
+
+    def rs1_to_string(self):
+        if self.rs1 != '':
+            return f'x{self.rs1}={self.rs1_value} '
+        
+        return ''
+
+    def rs2_to_string(self):
+        if self.rs2 != '':
+            return f'x{self.rs2}={self.rs2_value} '
+        
+        return ''
+
     def to_string(self):
-        return f'{self.pc} {self.instr} \
-                {self.rd}={self.rd_value} \
-                {self.rs1}={self.rs1_value} \
-                {self.rs2}={self.rs2_value} \
-                {self.disassembly}'
+        return f'{self.pc} {self.instr} {self.rd_to_string()}{self.rs1_to_string()}{self.rs2_to_string()}{self.disassembly}'
 
 class Logger:
 
