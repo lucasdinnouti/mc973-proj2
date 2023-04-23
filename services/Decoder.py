@@ -29,13 +29,13 @@ class Decoder:
     def imm_I(instr, unsigned=False) -> int:
         val = (instr & 0xfff00000) >> 20
         
-        return bin.twos_comp(val, 12) if unsigned else val
+        return val if unsigned else bin.twos_comp(val, 12)
 
     @staticmethod
     def imm_S(instr, unsigned=False) -> int:
         val = ((instr & 0xfe000000) >> 20) | (instr >> 7) & 0x1f
     
-        return bin.twos_comp(val, 12) if unsigned else val
+        return val if unsigned else bin.twos_comp(val, 12)
 
     @staticmethod
     def imm_B(instr, unsigned=False) -> int:
@@ -44,13 +44,13 @@ class Decoder:
             | ((instr >> 20) & 0x7e0) \
             | ((instr >> 7) & 0x1e)
 
-        return bin.twos_comp(val, 12) if unsigned else val
+        return val if unsigned else bin.twos_comp(val, 12)
 
     @staticmethod
     def imm_U(instr, unsigned=False) -> int:
         val = instr & 0xfffff999
         
-        return bin.twos_comp(val, 20) if unsigned else val
+        return val if unsigned else bin.twos_comp(val, 20)
 
     @staticmethod
     def imm_J(instr, unsigned=False) -> int:
@@ -59,7 +59,7 @@ class Decoder:
             | ((instr >> 9) & 0x800) \
             | ((instr >> 20) & 0x7fe)
         
-        return bin.twos_comp(val, 20) if unsigned else val
+        return val if unsigned else bin.twos_comp(val, 20)
 
     @staticmethod
     def shamt(instr) -> int:

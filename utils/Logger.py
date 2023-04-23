@@ -1,3 +1,5 @@
+from utils.Binary import Binary as bin
+
 class LogInfo:
 
     def __init__(self) -> None:
@@ -37,6 +39,9 @@ class LogInfo:
         self.disassembly = disassembly
 
     def to_hex(self, value):
+        if value < 0:
+            value = value + 2**32
+
         return hex(value).split('x')[1].zfill(8)
     
     def rd_to_string(self):
