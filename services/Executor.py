@@ -4,9 +4,9 @@ from services.executors.ITypeStrategy import ITypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
 
 class Executor:
-    def __init__(self, regs) -> None:
-        self.I_type = ITypeStrategy(regs)
-        self.R_type = RTypeStrategy(regs)
+    def __init__(self, cpu) -> None:
+        self.I_type = ITypeStrategy(cpu)
+        self.R_type = RTypeStrategy(cpu)
 
     def execute(self, instr, log_info) -> int:
         opcode = Decoder.opcode(instr)

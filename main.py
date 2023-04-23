@@ -1,4 +1,5 @@
 from modules.CPU import CPU 
+from services.Executor import Executor 
 from utils.Logger import Logger, LogInfo
 
 import sys
@@ -18,6 +19,8 @@ def read_program(path):
 
 def main():
     cpu = CPU()
+    executor = Executor(cpu)
+
     logger = Logger()
 
     program_path = sys.argv[0]
@@ -34,7 +37,7 @@ def main():
 
         cpu.pc += 4
 
-        if not cpu.execute(instr, log_info):
+        if not executor.execute(instr, log_info):
             break
         
         if cpu.pc == 0:

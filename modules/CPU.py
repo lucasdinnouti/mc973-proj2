@@ -10,13 +10,11 @@ class CPU:
         self.regs = [0 for _ in range(32)]
         self.pc = 0
         self.bus = BUS()
-        self.executor = Executor(self.regs)
 
     def fetch(self) -> int:
         return self.bus.load(self.pc, 32)
     
     def execute(self, instr, log_info) -> int:
-        self.executor.execute(instr, log_info)        
         self.regs[0] = 0
 
         return 1

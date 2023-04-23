@@ -38,11 +38,11 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] + self.regs[rs2]
+        self.set(rd, (self.get(rs1) + self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'add x{rd}, x{rs1}, x{rs2}')
 
     def exec_SUB(self, instr, log_info: LogInfo):
@@ -50,11 +50,11 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] - self.regs[rs2]
+        self.set(rd, (self.get(rs1) - self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'sub x{rd}, x{rs1}, x{rs2}')
 
     def exec_SLL(self, instr, log_info: LogInfo):
@@ -62,14 +62,14 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        if self.regs[rs1] >= 0:
-            self.regs[rd] = self.regs[rs1] << rs2
+        if self.get(rs1) >= 0:
+            self.set(rd, (self.get(rs1) << rs2))
         else:
-            self.regs[rd] = (self.regs[rs1]+0x100000000)<<rs2
+            self.set(rd, ((self.get(rs1)+0x100000000)<<rs2))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'sll x{rd}, x{rs1}, x{rs2}')
 
     def exec_SLT(self, instr, log_info: LogInfo):
@@ -77,14 +77,14 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        if self.regs[rs1] < self.regs[rs2]:
-            self.regs[rd] = 1
+        if self.get(rs1) < self.get(rs2):
+            self.set(rd, (1))
         else:
-            self.regs[rd] = 0
+            self.set(rd, (0))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'slt x{rd}, x{rs1}, x{rs2}')
 
     def exec_SLTU(self, instr, log_info: LogInfo):
@@ -92,18 +92,18 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        unsigned_rs1 = self.regs[rs1]+2**32
-        unsigned_rs2 = self.regs[rs2]+2**32
+        rs1_value = self.get(rs1, unsigned=True)
+        rs2_value = self.get(rs2, unsigned=True)
 
         # TODO: check rs1 = 0
-        if unsigned_rs1 < unsigned_rs2:
-            self.regs[rd] = 1
+        if rs1_value < rs2_value:
+            self.set(rd, (1))
         else:
-            self.regs[rd] = 0
+            self.set(rd, (0))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'sltu x{rd}, x{rs1}, x{rs2}')
 
     def exec_XOR(self, instr, log_info: LogInfo):
@@ -111,11 +111,11 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] ^ self.regs[rs2]
+        self.set(rd, (self.get(rs1) ^ self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'xor x{rd}, x{rs1}, x{rs2}')
 
     def exec_SRL(self, instr, log_info: LogInfo):
@@ -123,14 +123,14 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        if self.regs[rs1] >= 0:
-            self.regs[rd] = self.regs[rs1] >> self.regs[rs2]
+        if self.get(rs1) >= 0:
+            self.set(rd, (self.get(rs1) >> self.get(rs2)))
         else:
-            self.regs[rd] = (self.regs[rs1]+0x100000000)>>self.regs[rs2]
+            self.set(rd, ((self.get(rs1)+0x100000000)>>self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'srl x{rd}, x{rs1}, x{rs2}')
 
     def exec_SRA(self, instr, log_info: LogInfo):
@@ -138,11 +138,11 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] >> self.regs[rs2]
+        self.set(rd, (self.get(rs1) >> self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'sra x{rd}, x{rs1}, x{rs2}')
 
     def exec_OR (self, instr, log_info: LogInfo):
@@ -150,11 +150,11 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] | self.regs[rs2]
+        self.set(rd, (self.get(rs1) | self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'or x{rd}, x{rs1}, x{rs2}')
 
     def exec_AND(self, instr, log_info: LogInfo):
@@ -162,9 +162,9 @@ class RTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
         
-        self.regs[rd] = self.regs[rs1] & self.regs[rs2]
+        self.set(rd, (self.get(rs1) & self.get(rs2)))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
-        log_info.set_rs2(rs2, self.regs[rs2])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'and x{rd}, x{rs1}, x{rs2}')

@@ -34,10 +34,10 @@ class ITypeStrategy(ExecutionStrategy):
         imm = Decoder.imm_I(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.regs[rd] = self.regs[rs1] + imm
+        self.set(rd, (self.get(rs1) + imm))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'addi x{rd}, x{rs1}, {imm}')
 
     # logical left shift
@@ -46,13 +46,13 @@ class ITypeStrategy(ExecutionStrategy):
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
 
-        if self.regs[rs1] >= 0:
-            self.regs[rd] = self.regs[rs1] << shit_amount
+        if self.get(rs1) >= 0:
+            self.set(rd, (self.get(rs1) << shit_amount))
         else:
-            self.regs[rd] = (self.regs[rs1]+0x100000000)<<shit_amount
+            self.set(rd, ((self.get(rs1)+0x100000000)<<shit_amount))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'slli x{rd}, x{rs1}, {shit_amount}')
 
     # set less than immediate
@@ -61,41 +61,40 @@ class ITypeStrategy(ExecutionStrategy):
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
         
-        if self.regs[rs1] < imm:
-            self.regs[rd] = 1
+        if self.get(rs1) < imm:
+            self.set(rd, (1))
         else:
-            self.regs[rd] = 0
+            self.set(rd, (0))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'slti x{rd}, x{rs1}, {imm}')
 
     # set less than immediate (unsigned)
     def exec_SLTIU(self, instr, log_info: LogInfo):
-        imm = Decoder.imm_I(instr)
+        imm = Decoder.imm_I(instr, unsigned=True)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
 
-        unsigned_rs1 = self.regs[rs1]+2**32
-        unsigned_imm = imm+2**32
+        rs1_value = self.get(rs1, unsigned=True)
         
-        if unsigned_rs1 < unsigned_imm:
-            self.regs[rd] = 1
+        if rs1_value < imm:
+            self.set(rd, (1))
         else:
-            self.regs[rd] = 0
+            self.set(rd, (0))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'sltiu x{rd}, x{rs1}, {imm}')
 
     def exec_XORI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.regs[rd] = self.regs[rs1] ^ imm
+        self.set(rd, (self.get(rs1) ^ imm))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'xori x{rd}, x{rs1}, {imm}')
 
     # logical right shift
@@ -104,13 +103,13 @@ class ITypeStrategy(ExecutionStrategy):
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
 
-        if self.regs[rs1] >= 0:
-            self.regs[rd] = self.regs[rs1] >> shit_amount
+        if self.get(rs1) >= 0:
+            self.set(rd, (self.get(rs1) >> shit_amount))
         else:
-            self.regs[rd] = (self.regs[rs1]+0x100000000)>>shit_amount
+            self.set(rd, ((self.get(rs1)+0x100000000)>>shit_amount))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'srli x{rd}, x{rs1}, {shit_amount}')
 
     # arithmetic right shift
@@ -118,28 +117,28 @@ class ITypeStrategy(ExecutionStrategy):
         shit_amount = Decoder.shamt(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.regs[rs1] = self.regs[rs1] >> shit_amount
+        self.set(rd, (self.get(rs1) >> shit_amount))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'srai x{rd}, x{rs1}, {shit_amount}')
 
     def exec_ORI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.regs[rd] = self.regs[rs1] | imm
+        self.set(rd, (self.get(rs1) | imm))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'ori x{rd}, x{rs1}, {imm}')
 
     def exec_ANDI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.regs[rd] = self.regs[rs1] & imm
+        self.set(rd, (self.get(rs1) & imm))
 
-        log_info.set_rd(rd, self.regs[rd])
-        log_info.set_rs1(rs1, self.regs[rs1])
+        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_disassembly(f'andi x{rd}, x{rs1}, {imm}')

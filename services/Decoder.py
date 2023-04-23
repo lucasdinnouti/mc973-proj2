@@ -1,3 +1,5 @@
+from utils.Binary import Binary as bin
+
 class Decoder:
     @staticmethod
     def opcode(instr) -> int:
@@ -24,30 +26,40 @@ class Decoder:
         return (instr >> 20) & 0x1f 
 
     @staticmethod
-    def imm_I(instr) -> int:
-        return (instr & 0xfff00000) >> 20 
+    def imm_I(instr, unsigned=False) -> int:
+        val = (instr & 0xfff00000) >> 20
+        
+        return bin.twos_comp(val, 12) if unsigned else val
 
     @staticmethod
-    def imm_S(instr) -> int:
-        return ((instr & 0xfe000000) >> 20) | (instr >> 7) & 0x1f
+    def imm_S(instr, unsigned=False) -> int:
+        val = ((instr & 0xfe000000) >> 20) | (instr >> 7) & 0x1f
+    
+        return bin.twos_comp(val, 12) if unsigned else val
 
     @staticmethod
-    def imm_B(instr) -> int:
-        return ((instr & 0x80000000) >> 19) \
+    def imm_B(instr, unsigned=False) -> int:
+        val = ((instr & 0x80000000) >> 19) \
             | ((instr & 0x80) << 4) \
             | ((instr >> 20) & 0x7e0) \
             | ((instr >> 7) & 0x1e)
 
-    @staticmethod
-    def imm_U(instr) -> int:
-        return instr & 0xfffff999
+        return bin.twos_comp(val, 12) if unsigned else val
 
     @staticmethod
-    def imm_J(instr) -> int:
-        return ((instr & 0x80000000) >> 11) \
+    def imm_U(instr, unsigned=False) -> int:
+        val = instr & 0xfffff999
+        
+        return bin.twos_comp(val, 20) if unsigned else val
+
+    @staticmethod
+    def imm_J(instr, unsigned=False) -> int:
+        val = ((instr & 0x80000000) >> 11) \
             | (instr & 0xff000) \
             | ((instr >> 9) & 0x800) \
             | ((instr >> 20) & 0x7fe)
+        
+        return bin.twos_comp(val, 20) if unsigned else val
 
     @staticmethod
     def shamt(instr) -> int:
