@@ -1,38 +1,40 @@
 import utils.Constants as const
 from services.Decoder import Decoder
-from services.executors.ITypeStrategy import ITypeStrategy
+from services.executors.BTypeStrategy import BTypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
+from services.executors.ITypeStrategy import ITypeStrategy
 
 class Executor:
     def __init__(self, cpu) -> None:
-        self.I_type = ITypeStrategy(cpu)
+        self.B_type = BTypeStrategy(cpu)
         self.R_type = RTypeStrategy(cpu)
+        self.I_type = ITypeStrategy(cpu)
 
     def execute(self, instr, log_info) -> int:
         opcode = Decoder.opcode(instr)
 
         if opcode == const.LUI:
-            self.execute_LUI(instr, log_info)
+            self.LUI.execute(instr, log_info)
         elif opcode == const.AUIPC:
-            self.execute_AUIPC(instr, log_info)
+            self.AUIPC.execute(instr, log_info)
         elif opcode == const.JAL:
-            self.execute_JAL(instr, log_info)
+            self.JAL.execute(instr, log_info)
         elif opcode == const.JALR:
-            self.execute_JALR(instr, log_info)
+            self.JALR.execute(instr, log_info)
         elif opcode == const.LOAD:
-            self.execute_LOAD(instr, log_info)
+            self.LOAD.execute(instr, log_info)
         elif opcode == const.FENCE:
-            self.execute_FENCE(instr, log_info)
+            self.FENCE.execute(instr, log_info)
         elif opcode == const.B_TYPE:
-            self.execute_B_TYPE(instr, log_info)
+            self.B_type.execute(instr, log_info)
         elif opcode == const.R_TYPE:
             self.R_type.execute(instr, log_info)
         elif opcode == const.I_TYPE:
             self.I_type.execute(instr, log_info)
         elif opcode == const.C_TYPE:
-            self.execute_C_TYPE(instr, log_info)
+            self.C_TYPE.execute(instr, log_info)
         elif opcode == const.S_TYPE:
-            self.execute_S_TYPE(instr, log_info)
+            self.S_TYPE.execute(instr, log_info)
         else:
             raise Exception('Cannot decode instruction type')
         
