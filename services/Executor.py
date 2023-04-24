@@ -3,12 +3,14 @@ from services.Decoder import Decoder
 from services.executors.BTypeStrategy import BTypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
 from services.executors.ITypeStrategy import ITypeStrategy
+from services.executors.CTypeStrategy import CTypeStrategy
 
 class Executor:
     def __init__(self, cpu) -> None:
         self.B_type = BTypeStrategy(cpu)
         self.R_type = RTypeStrategy(cpu)
         self.I_type = ITypeStrategy(cpu)
+        self.C_type = CTypeStrategy(cpu)
 
     def execute(self, instr, log_info) -> int:
         opcode = Decoder.opcode(instr)
@@ -32,7 +34,7 @@ class Executor:
         elif opcode == const.I_TYPE:
             self.I_type.execute(instr, log_info)
         elif opcode == const.C_TYPE:
-            self.C_TYPE.execute(instr, log_info)
+            self.C_type.execute(instr, log_info)
         elif opcode == const.S_TYPE:
             self.S_TYPE.execute(instr, log_info)
         else:
