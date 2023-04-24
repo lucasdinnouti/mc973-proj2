@@ -48,7 +48,7 @@ class Decoder:
 
     @staticmethod
     def imm_U(instr, unsigned=False) -> int:
-        val = instr & 0xfffff999
+        val = instr >> 12
         
         return val if unsigned else bin.twos_comp(val, 20)
 
