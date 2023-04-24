@@ -30,6 +30,12 @@ class Decoder:
         val = (instr & 0xfff00000) >> 20
         
         return val if unsigned else bin.twos_comp(val, 12)
+    
+    @staticmethod
+    def imm_LOAD(instr, unsigned=False) -> int:
+        val = (instr & 0xfff00000) >> 20
+        
+        return val if unsigned else bin.twos_comp(val, 12)
 
     @staticmethod
     def imm_S(instr, unsigned=False) -> int:

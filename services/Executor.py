@@ -6,6 +6,7 @@ from services.executors.RTypeStrategy import RTypeStrategy
 from services.executors.ITypeStrategy import ITypeStrategy
 from services.executors.CTypeStrategy import CTypeStrategy
 from services.executors.STypeStrategy import STypeStrategy
+from services.executors.LoadStrategy import LoadStrategy
 
 class Executor:
     def __init__(self, cpu) -> None:
@@ -16,6 +17,7 @@ class Executor:
         self.I_type = ITypeStrategy(cpu)
         self.C_type = CTypeStrategy(cpu)
         self.S_TYPE = STypeStrategy(cpu)
+        self.LOAD   = LoadStrategy(cpu)
 
     def execute(self, instr, log_info) -> int:
         opcode = Decoder.opcode(instr)
