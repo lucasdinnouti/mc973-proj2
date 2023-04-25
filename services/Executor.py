@@ -1,6 +1,7 @@
 import utils.Constants as const
 from services.Decoder import Decoder
 from services.executors.LUIStrategy import LUIStrategy
+from services.executors.JALStrategy import JALStrategy
 from services.executors.BTypeStrategy import BTypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
 from services.executors.ITypeStrategy import ITypeStrategy
@@ -11,6 +12,7 @@ from services.executors.LoadStrategy import LoadStrategy
 class Executor:
     def __init__(self, cpu) -> None:
         self.LUI = LUIStrategy(cpu)
+        self.JAL = JALStrategy(cpu)
 
         self.B_type = BTypeStrategy(cpu)
         self.R_type = RTypeStrategy(cpu)
