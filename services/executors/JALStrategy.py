@@ -1,7 +1,6 @@
 from services.executors.ExecutionStrategy import ExecutionStrategy
 from utils.Logger import LogInfo
 from services.Decoder import Decoder
-from utils.Binary import Binary as bin
 
 class JALStrategy(ExecutionStrategy):
     def execute(self, instr, log_info: LogInfo) -> int:

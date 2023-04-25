@@ -2,18 +2,18 @@ from services.executors.ExecutionStrategy import ExecutionStrategy
 from utils.Logger import LogInfo
 from services.Decoder import Decoder
 
-class LUIStrategy(ExecutionStrategy):
+class AUIPCStrategy(ExecutionStrategy):
     def execute(self, instr, log_info: LogInfo) -> int:
-        self.exec_LUI(instr, log_info)
+        self.exec_AUIPC(instr, log_info)
         
-    def exec_LUI(self, instr, log_info: LogInfo):
+    def exec_AUIPC(self, instr, log_info: LogInfo):
         imm = Decoder.imm_U(instr)
         rd = Decoder.rd(instr)
 
-        self.set(rd, (imm & 0xfffff000))
+        self.set(rd, self.cpu.pc + (imm & 0xfffff000))
 
         if imm < 0:
             imm += 2**32
 
         log_info.set_rd(rd, self.get(rd))
-        log_info.set_disassembly(f'lui x{rd}, {hex(imm << 12)}')
+        log_info.set_disassembly(f'auipc x{rd}, {hex(imm << 12)}')
