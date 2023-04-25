@@ -65,7 +65,7 @@ class Decoder:
             | ((instr >> 9) & 0x800) \
             | ((instr >> 20) & 0x7fe)
         
-        return val if unsigned else bin.twos_comp(val, 20)
+        return val if unsigned else bin.twos_comp(val, 21)
 
     @staticmethod
     def shamt(instr) -> int:
