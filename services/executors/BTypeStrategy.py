@@ -34,7 +34,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value == rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
         log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {imm}')
@@ -51,7 +51,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value != rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
         log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {imm}')
@@ -67,7 +67,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value < rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
         log_info.set_disassembly(f'blt x{rs1}, x{rs2}, {imm}')
@@ -83,7 +83,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value >= rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
         log_info.set_disassembly(f'bge x{rs1}, x{rs2}, {imm}')
@@ -99,7 +99,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value < rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'bltu x{rs1}, x{rs2}, {imm}')
@@ -115,7 +115,7 @@ class BTypeStrategy(ExecutionStrategy):
         if rs1_value >= rs2_value:
             self.cpu.pc = imm
 
-        log_info.set_pc(imm)
+        log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_rs2(rs2, self.get(rs2))
         log_info.set_disassembly(f'bgey x{rs1}, x{rs2}, {imm}')
