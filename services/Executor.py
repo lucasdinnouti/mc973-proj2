@@ -3,11 +3,13 @@ from services.Decoder import Decoder
 from services.executors.LUIStrategy import LUIStrategy
 from services.executors.AUIPCStrategy import AUIPCStrategy
 from services.executors.JALStrategy import JALStrategy
+from services.executors.JALRStrategy import JALRStrategy
 from services.executors.BTypeStrategy import BTypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
 from services.executors.ITypeStrategy import ITypeStrategy
 from services.executors.CTypeStrategy import CTypeStrategy
 from services.executors.STypeStrategy import STypeStrategy
+from services.executors.ETypeStrategy import ETypeStrategy
 from services.executors.LoadStrategy import LoadStrategy
 
 class Executor:
@@ -15,12 +17,14 @@ class Executor:
         self.LUI = LUIStrategy(cpu)
         self.AUIPC = AUIPCStrategy(cpu)
         self.JAL = JALStrategy(cpu)
+        self.JALR = JALRStrategy(cpu)
 
         self.B_type = BTypeStrategy(cpu)
         self.R_type = RTypeStrategy(cpu)
         self.I_type = ITypeStrategy(cpu)
         self.C_type = CTypeStrategy(cpu)
         self.S_TYPE = STypeStrategy(cpu)
+        self.E_TYPE = ETypeStrategy(cpu)
         self.LOAD   = LoadStrategy(cpu)
 
     def execute(self, instr, log_info) -> int:
@@ -48,6 +52,8 @@ class Executor:
             self.C_type.execute(instr, log_info)
         elif opcode == const.S_TYPE:
             self.S_TYPE.execute(instr, log_info)
+        elif opcode == const.E_TYPE:
+            self.E_TYPE.execute(instr, log_info)
         else:
             raise Exception('Cannot decode instruction type')
         

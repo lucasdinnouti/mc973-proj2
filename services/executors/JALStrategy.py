@@ -11,10 +11,9 @@ class JALStrategy(ExecutionStrategy):
         rd = Decoder.rd(instr)
         
         self.cpu.pc -= 4 # TODO Check if nedeed
-        jump_address = self.cpu.pc + imm
 
-        self.set(rd, jump_address)
-        self.cpu.pc = jump_address
+        self.set(rd, self.cpu.pc + 4)
+        self.cpu.pc = self.cpu.pc + imm
 
         if imm < 0:
             imm += 2**32
