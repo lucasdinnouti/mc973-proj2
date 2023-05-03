@@ -42,18 +42,18 @@ class ITypeStrategy(ExecutionStrategy):
 
     # logical left shift
     def exec_SLLI(self, instr, log_info: LogInfo):
-        shit_amount = Decoder.shamt(instr)
+        shift_amount = Decoder.shamt(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
 
         if self.cpu.get(rs1) >= 0:
-            self.cpu.set(rd, (self.cpu.get(rs1) << shit_amount))
+            self.cpu.set(rd, (self.cpu.get(rs1) << shift_amount))
         else:
-            self.cpu.set(rd, ((self.cpu.get(rs1)+0x100000000)<<shit_amount))
+            self.cpu.set(rd, ((self.cpu.get(rs1)+0x100000000)<<shift_amount))
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'slli x{rd}, x{rs1}, {shit_amount}')
+        log_info.set_disassembly(f'slli x{rd}, x{rs1}, {shift_amount}')
 
     # set less than immediate
     def exec_SLTI(self, instr, log_info: LogInfo):
@@ -99,29 +99,29 @@ class ITypeStrategy(ExecutionStrategy):
 
     # logical right shift
     def exec_SRLI(self, instr, log_info: LogInfo):
-        shit_amount = Decoder.shamt(instr)
+        shift_amount = Decoder.shamt(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
 
         if self.cpu.get(rs1) >= 0:
-            self.cpu.set(rd, (self.cpu.get(rs1) >> shit_amount))
+            self.cpu.set(rd, (self.cpu.get(rs1) >> shift_amount))
         else:
-            self.cpu.set(rd, ((self.cpu.get(rs1)+0x100000000)>>shit_amount))
+            self.cpu.set(rd, ((self.cpu.get(rs1)+0x100000000)>>shift_amount))
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'srli x{rd}, x{rs1}, {shit_amount}')
+        log_info.set_disassembly(f'srli x{rd}, x{rs1}, {shift_amount}')
 
     # arithmetic right shift
     def exec_SRAI(self, instr, log_info: LogInfo):
-        shit_amount = Decoder.shamt(instr)
+        shift_amount = Decoder.shamt(instr)
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
-        self.cpu.set(rd, (self.cpu.get(rs1) >> shit_amount))
+        self.cpu.set(rd, (self.cpu.get(rs1) >> shift_amount))
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'srai x{rd}, x{rs1}, {shit_amount}')
+        log_info.set_disassembly(f'srai x{rd}, x{rs1}, {shift_amount}')
 
     def exec_ORI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
