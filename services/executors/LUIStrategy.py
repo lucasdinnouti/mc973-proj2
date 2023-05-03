@@ -10,10 +10,10 @@ class LUIStrategy(ExecutionStrategy):
         imm = Decoder.imm_U(instr)
         rd = Decoder.rd(instr)
 
-        self.set(rd, (imm & 0xfffff000))
+        self.cpu.set(rd, (imm & 0xfffff000))
 
         if imm < 0:
             imm += 2**32
 
-        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_disassembly(f'lui x{rd}, {hex(imm << 12)}')

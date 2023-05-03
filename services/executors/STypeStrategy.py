@@ -21,12 +21,12 @@ class STypeStrategy(ExecutionStrategy):
         rs2 = Decoder.rs2(instr)
         offset = Decoder.imm_S(instr)
 
-        addr = self.get(rs1) + offset
+        addr = self.cpu.get(rs1) + offset
 
-        self.cpu.bus.store(addr, size, self.get(rs2))
+        self.cpu.bus.store(addr, size, self.cpu.get(rs2))
 
-        log_info.set_rs1(rs1, self.get(rs1))
-        log_info.set_rs2(rs2, self.get(rs2))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
+        log_info.set_rs2(rs2, self.cpu.get(rs2))
         log_info.set_disassembly(f'{acronym} x{rs2}, {offset}(x{rs1})')
 
     def exec_SB(self, instr, log_info: LogInfo):

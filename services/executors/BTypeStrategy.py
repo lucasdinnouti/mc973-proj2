@@ -28,8 +28,8 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1)
-        rs2_value = self.get(rs2) 
+        rs1_value = self.cpu.get(rs1)
+        rs2_value = self.cpu.get(rs2) 
 
         if rs1_value == rs2_value:
             self.cpu.pc = imm
@@ -45,8 +45,8 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1)
-        rs2_value = self.get(rs2) 
+        rs1_value = self.cpu.get(rs1)
+        rs2_value = self.cpu.get(rs2) 
 
         if rs1_value != rs2_value:
             self.cpu.pc = imm
@@ -61,8 +61,8 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1)
-        rs2_value = self.get(rs2) 
+        rs1_value = self.cpu.get(rs1)
+        rs2_value = self.cpu.get(rs2) 
 
         if rs1_value < rs2_value:
             self.cpu.pc = imm
@@ -77,8 +77,8 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1)
-        rs2_value = self.get(rs2) 
+        rs1_value = self.cpu.get(rs1)
+        rs2_value = self.cpu.get(rs2) 
 
         if rs1_value >= rs2_value:
             self.cpu.pc = imm
@@ -93,15 +93,15 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1, unsigned=True)
-        rs2_value = self.get(rs2, unsigned=True) 
+        rs1_value = self.cpu.get(rs1, unsigned=True)
+        rs2_value = self.cpu.get(rs2, unsigned=True) 
 
         if rs1_value < rs2_value:
             self.cpu.pc = imm
 
         log_info.set_pc(self.cpu.pc)
-        log_info.set_rs1(rs1, self.get(rs1))
-        log_info.set_rs2(rs2, self.get(rs2))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
+        log_info.set_rs2(rs2, self.cpu.get(rs2))
         log_info.set_disassembly(f'bltu x{rs1}, x{rs2}, {imm}')
 
     def exec_BGEU(self, instr, log_info: LogInfo):
@@ -109,14 +109,14 @@ class BTypeStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        rs1_value = self.get(rs1, unsigned=True)
-        rs2_value = self.get(rs2, unsigned=True) 
+        rs1_value = self.cpu.get(rs1, unsigned=True)
+        rs2_value = self.cpu.get(rs2, unsigned=True) 
 
         if rs1_value >= rs2_value:
             self.cpu.pc = imm
 
         log_info.set_pc(self.cpu.pc)
-        log_info.set_rs1(rs1, self.get(rs1))
-        log_info.set_rs2(rs2, self.get(rs2))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
+        log_info.set_rs2(rs2, self.cpu.get(rs2))
         log_info.set_disassembly(f'bgey x{rs1}, x{rs2}, {imm}')
 

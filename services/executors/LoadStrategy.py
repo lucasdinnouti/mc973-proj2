@@ -25,13 +25,13 @@ class LoadStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         offset = Decoder.imm_LOAD(instr)
 
-        addr = self.get(rs1) + offset
+        addr = self.cpu.get(rs1) + offset
 
         loaded_value = self.cpu.bus.load(addr, size)
-        self.set(rd, loaded_value)
+        self.cpu.set(rd, loaded_value)
 
-        log_info.set_rd(rd, self.get(rd))
-        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rd(rd, self.cpu.get(rd))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
         log_info.set_disassembly(f'{acronym} x{rd}, {offset}(x{rs1})')
 
     def exec_LB(self, instr, log_info: LogInfo):
@@ -48,13 +48,13 @@ class LoadStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         offset = Decoder.imm_LOAD(instr)
 
-        addr = self.get(rs1) + offset
+        addr = self.cpu.get(rs1) + offset
 
         value = self.cpu.bus.load(addr, 8) & 0xFF
-        self.set(rd, value)
+        self.cpu.set(rd, value)
 
-        log_info.set_rd(rd, self.get(rd))
-        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rd(rd, self.cpu.get(rd))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
         log_info.set_disassembly(f'lbu x{rd}, {offset}(x{rs1})')
 
     def exec_LHU(self, instr, log_info: LogInfo):
@@ -62,11 +62,11 @@ class LoadStrategy(ExecutionStrategy):
         rs1 = Decoder.rs1(instr)
         offset = Decoder.imm_LOAD(instr)
 
-        addr = self.get(rs1) + offset
+        addr = self.cpu.get(rs1) + offset
 
         value = self.cpu.bus.load(addr, 16) & 0xFFFF
-        self.set(rd, value)
+        self.cpu.set(rd, value)
 
-        log_info.set_rd(rd, self.get(rd))
-        log_info.set_rs1(rs1, self.get(rs1))
+        log_info.set_rd(rd, self.cpu.get(rd))
+        log_info.set_rs1(rs1, self.cpu.get(rs1))
         log_info.set_disassembly(f'lhu x{rd}, {offset}(x{rs1})')

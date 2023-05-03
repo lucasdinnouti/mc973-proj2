@@ -13,13 +13,13 @@ class JALRStrategy(ExecutionStrategy):
         
         self.cpu.pc -= 4 # TODO Check if nedeed
 
-        rs1_value = self.get(rs1)
+        rs1_value = self.cpu.get(rs1)
 
-        self.set(rd, self.cpu.pc + 4)
+        self.cpu.set(rd, self.cpu.pc + 4)
         self.cpu.pc = (rs1_value + imm) & ~1
         
         if imm < 0:
             imm += 2**32
 
-        log_info.set_rd(rd, self.get(rd))
+        log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_disassembly(f'JALR x{rd}, {hex(imm)}')

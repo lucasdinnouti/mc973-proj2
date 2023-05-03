@@ -1,5 +1,6 @@
 from modules.CPU import CPU 
 from services.Executor import Executor 
+from services.Executor import Executor 
 from utils.Logger import Logger, LogInfo
 
 import sys
@@ -23,20 +24,20 @@ def main():
 
     logger = Logger()
 
-    program_path = sys.argv[0]
-    program = [
-        0b00000000111111111111000110110111, # lui x3, 0xfffff000
-        0b00000000111111111111000010110111, # lui x1, 0xfffff000
-        0b00000000001100011000000110010011, # addi x3, x0, 3
-        0b00000000000100001000000010010011, # addi x1, x1, 1
-        0b00000000001100001101110001100011, # bge  x1, x3, 24
-        0b11111111100111111111000101101111, # jal  x2, -8
-        0b00000000001100001000000010100011, # sb x3, 1(x1)
-        0b00000000001000000000001000000011, # lb x4, 2(x0)
-        0b11111111111111111111000100010111, # auipc x2, 0xffffffff000
-        0b00000000001100001101000001100011  # bge  x1, x3, 0
-    ]
-    #program = read_program(program_path)
+    program_path = sys.argv[1]
+    # program = [
+    #     0b00000000111111111111000110110111, # lui x3, 0xfffff000
+    #     0b00000000111111111111000010110111, # lui x1, 0xfffff000
+    #     0b00000000001100011000000110010011, # addi x3, x0, 3
+    #     0b00000000000100001000000010010011, # addi x1, x1, 1
+    #     0b00000000001100001101110001100011, # bge  x1, x3, 24
+    #     0b11111111100111111111000101101111, # jal  x2, -8
+    #     0b00000000001100001000000010100011, # sb x3, 1(x1)
+    #     0b00000000001000000000001000000011, # lb x4, 2(x0)
+    #     0b11111111111111111111000100010111, # auipc x2, 0xffffffff000
+    #     0b00000000001100001101000001100011  # bge  x1, x3, 0
+    # ]
+    program = read_program(program_path)
     cpu.store_program(program)
     
     while True:
@@ -50,6 +51,8 @@ def main():
 
         if not executor.execute(instr, log_info):
             break
+        
+        cpu.enrich_registers(instr, log_info)
         
         logger.log(log_info.to_string())
         
