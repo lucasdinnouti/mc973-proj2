@@ -17,12 +17,15 @@ class CPU:
         for i, instr in enumerate(program):
             self.bus.store(i * 4, 32, instr)
 
-    def enrich_registers(self, instr, log_info: LogInfo):
+    def enrich_rd(self, instr, log_info: LogInfo):
         rd = Decoder.rd(instr)
+
+        log_info.set_rd(rd, self.get(rd))
+            
+    def enrich_rs(self, instr, log_info: LogInfo):
         rs1 = Decoder.rs1(instr)
         rs2 = Decoder.rs2(instr)
 
-        log_info.set_rd(rd, self.get(rd))
         log_info.set_rs1(rs1, self.get(rs1))
         log_info.set_rs2(rs2, self.get(rs2))
             

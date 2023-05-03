@@ -49,9 +49,11 @@ def main():
 
         cpu.pc += 4
 
+        cpu.enrich_rs(instr, log_info)
+        
         execution = executor.execute(instr, log_info)
         
-        cpu.enrich_registers(instr, log_info)
+        cpu.enrich_rd(instr, log_info)
         
         logger.log(log_info.to_string())
         

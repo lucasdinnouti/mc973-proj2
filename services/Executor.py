@@ -10,7 +10,6 @@ from services.executors.ITypeStrategy import ITypeStrategy
 from services.executors.STypeStrategy import STypeStrategy
 from services.executors.ETypeStrategy import ETypeStrategy
 from services.executors.LoadStrategy import LoadStrategy
-from utils.Logger import LogInfo
 
 class Executor:
     def __init__(self, cpu) -> None:
