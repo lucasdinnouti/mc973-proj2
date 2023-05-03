@@ -19,24 +19,14 @@ def read_program(path):
     return content
 
 def main():
+    total_cicles = 0
+
     cpu = CPU()
     executor = Executor(cpu)
 
     logger = Logger()
 
     program_path = sys.argv[1]
-    # program = [
-    #     0b00000000111111111111000110110111, # lui x3, 0xfffff000
-    #     0b00000000111111111111000010110111, # lui x1, 0xfffff000
-    #     0b00000000001100011000000110010011, # addi x3, x0, 3
-    #     0b00000000000100001000000010010011, # addi x1, x1, 1
-    #     0b00000000001100001101110001100011, # bge  x1, x3, 24
-    #     0b11111111100111111111000101101111, # jal  x2, -8
-    #     0b00000000001100001000000010100011, # sb x3, 1(x1)
-    #     0b00000000001000000000001000000011, # lb x4, 2(x0)
-    #     0b11111111111111111111000100010111, # auipc x2, 0xffffffff000
-    #     0b00000000001100001101000001100011  # bge  x1, x3, 0
-    # ]
     program = read_program(program_path)
     cpu.store_program(program)
     
@@ -51,14 +41,18 @@ def main():
 
         cpu.enrich_rs(instr, log_info)
         
-        execution = executor.execute(instr, log_info)
+        cicles = executor.execute(instr, log_info)
         
         cpu.enrich_rd(instr, log_info)
         
         logger.log(log_info.to_string())
         
-        if execution == 0:
+        if cicles < 0:
             break
+        else:
+            total_cicles += cicles
+
+    print('Total cicles:', total_cicles)
 
 
 if __name__ == "__main__":

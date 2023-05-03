@@ -20,4 +20,4 @@ class ETypeStrategy(ExecutionStrategy):
 
     def exec_EBREAK(self, instr, log_info: LogInfo):
         log_info.set_disassembly('ebreak')
-        return 0
+        return -1
