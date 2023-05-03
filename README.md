@@ -52,11 +52,7 @@ python3 main.py tests/<PROGRAM>
 For example:
 
 ```
-python3 main.py tests/000.main.riscv
+python3 main.py tests/000.main.riscv.bin
 ```
 
-This will generate a log file on the `./test` folder. To change this folder, use `OUTPUT_FOLDER` environment variable.
-
-```
-OUTPUT_FOLDER=other-file python3 main.py tests/000.main.riscv
-```
+This will generate a log file on the `./test` folder.

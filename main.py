@@ -23,13 +23,11 @@ def main():
 
     cpu = CPU()
     executor = Executor(cpu)
-
-    logger = Logger()
-
     program_path = sys.argv[1]
     program = read_program(program_path)
     cpu.store_program(program)
     
+    logger = Logger(program_path)
     while True:
         log_info = LogInfo()
         log_info.set_pc(cpu.pc)
