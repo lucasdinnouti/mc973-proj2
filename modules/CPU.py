@@ -1,6 +1,7 @@
 from modules.BUS import BUS
 from utils.Logger import LogInfo
 from services.Decoder import Decoder
+from utils.Binary import Binary as bin
 
 class CPU:
 
