@@ -19,4 +19,4 @@ class JALStrategy(ExecutionStrategy):
             imm += 2**32
 
         log_info.set_rd(rd, self.cpu.get(rd))
-        log_info.set_disassembly(f'jal x{rd}, {hex(imm)}')
+        log_info.set_disassembly(f'jal x{rd}, {int(imm)}')

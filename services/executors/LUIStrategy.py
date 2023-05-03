@@ -16,4 +16,4 @@ class LUIStrategy(ExecutionStrategy):
             imm += 2**32
 
         log_info.set_rd(rd, self.cpu.get(rd))
-        log_info.set_disassembly(f'lui x{rd}, {hex(imm << 12)}')
+        log_info.set_disassembly(f'lui x{rd}, {int(imm)}')

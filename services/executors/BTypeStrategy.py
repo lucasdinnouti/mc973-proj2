@@ -37,7 +37,7 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
-        log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {int(imm)}')
 
     def exec_BNE(self, instr, log_info: LogInfo):
 
@@ -54,7 +54,7 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
-        log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'beq x{rs1}, x{rs2}, {int(imm)}')
 
     def exec_BLT(self, instr, log_info: LogInfo):
         imm = Decoder.imm_B(instr)
@@ -70,7 +70,7 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
-        log_info.set_disassembly(f'blt x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'blt x{rs1}, x{rs2}, {int(imm)}')
 
     def exec_BGE(self, instr, log_info: LogInfo):
         imm = Decoder.imm_B(instr)
@@ -86,7 +86,7 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, rs1_value)
         log_info.set_rs2(rs2, rs2_value)
-        log_info.set_disassembly(f'bge x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'bge x{rs1}, x{rs2}, {int(imm)}')
 
     def exec_BLTU(self, instr, log_info: LogInfo):
         imm = Decoder.imm_B(instr)
@@ -102,7 +102,7 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, self.cpu.get(rs1))
         log_info.set_rs2(rs2, self.cpu.get(rs2))
-        log_info.set_disassembly(f'bltu x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'bltu x{rs1}, x{rs2}, {int(imm)}')
 
     def exec_BGEU(self, instr, log_info: LogInfo):
         imm = Decoder.imm_B(instr)
@@ -118,5 +118,5 @@ class BTypeStrategy(ExecutionStrategy):
         log_info.set_pc(self.cpu.pc)
         log_info.set_rs1(rs1, self.cpu.get(rs1))
         log_info.set_rs2(rs2, self.cpu.get(rs2))
-        log_info.set_disassembly(f'bgey x{rs1}, x{rs2}, {imm}')
+        log_info.set_disassembly(f'bgey x{rs1}, x{rs2}, {int(imm)}')
 

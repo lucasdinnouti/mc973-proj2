@@ -8,14 +8,16 @@ class ETypeStrategy(ExecutionStrategy):
         imm = Decoder.imm_I(instr)
 
         if imm == const.ECALL:
-            self.exec_ECALL(instr, log_info)
+            return self.exec_ECALL(instr, log_info)
         elif imm == const.EBREAK:
-            self.exec_EBREAK(instr, log_info)
+            return self.exec_EBREAK(instr, log_info)
         else:
             raise Exception('Cannot decode E_TYPE instruction')
 
     def exec_ECALL(self, instr, log_info: LogInfo):
-        pass # TODO ?
+        print('* ecall not implemented. *')
+
 
     def exec_EBREAK(self, instr, log_info: LogInfo):
-        pass # TODO ?
+        log_info.set_disassembly('ebreak')
+        return 0

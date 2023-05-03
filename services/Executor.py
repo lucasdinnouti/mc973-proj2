@@ -7,7 +7,6 @@ from services.executors.JALRStrategy import JALRStrategy
 from services.executors.BTypeStrategy import BTypeStrategy
 from services.executors.RTypeStrategy import RTypeStrategy
 from services.executors.ITypeStrategy import ITypeStrategy
-from services.executors.CTypeStrategy import CTypeStrategy
 from services.executors.STypeStrategy import STypeStrategy
 from services.executors.ETypeStrategy import ETypeStrategy
 from services.executors.LoadStrategy import LoadStrategy
@@ -23,7 +22,6 @@ class Executor:
         self.B_type = BTypeStrategy(cpu)
         self.R_type = RTypeStrategy(cpu)
         self.I_type = ITypeStrategy(cpu)
-        self.C_type = CTypeStrategy(cpu)
         self.S_TYPE = STypeStrategy(cpu)
         self.E_TYPE = ETypeStrategy(cpu)
         self.LOAD   = LoadStrategy(cpu)
@@ -41,20 +39,16 @@ class Executor:
             self.JALR.execute(instr, log_info)
         elif opcode == const.LOAD:
             self.LOAD.execute(instr, log_info)
-        elif opcode == const.FENCE:
-            self.FENCE.execute(instr, log_info)
         elif opcode == const.B_TYPE:
             self.B_type.execute(instr, log_info)
         elif opcode == const.R_TYPE:
             self.R_type.execute(instr, log_info)
         elif opcode == const.I_TYPE:
             self.I_type.execute(instr, log_info)
-        elif opcode == const.C_TYPE:
-            self.C_type.execute(instr, log_info)
         elif opcode == const.S_TYPE:
             self.S_TYPE.execute(instr, log_info)
         elif opcode == const.E_TYPE:
-            self.E_TYPE.execute(instr, log_info)
+            return self.E_TYPE.execute(instr, log_info)
         else:
             raise Exception('Cannot decode instruction type')
         

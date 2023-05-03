@@ -49,14 +49,13 @@ def main():
 
         cpu.pc += 4
 
-        if not executor.execute(instr, log_info):
-            break
+        execution = executor.execute(instr, log_info)
         
         cpu.enrich_registers(instr, log_info)
         
         logger.log(log_info.to_string())
         
-        if cpu.pc == 0:
+        if execution == 0:
             break
 
 

@@ -38,7 +38,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'addi x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'addi x{rd}, x{rs1}, {int(imm)}')
 
     # logical left shift
     def exec_SLLI(self, instr, log_info: LogInfo):
@@ -68,7 +68,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'slti x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'slti x{rd}, x{rs1}, {int(imm)}')
 
     # set less than immediate (unsigned)
     def exec_SLTIU(self, instr, log_info: LogInfo):
@@ -85,7 +85,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'sltiu x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'sltiu x{rd}, x{rs1}, {int(imm)}')
 
     def exec_XORI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
@@ -95,7 +95,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'xori x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'xori x{rd}, x{rs1}, {int(imm)}')
 
     # logical right shift
     def exec_SRLI(self, instr, log_info: LogInfo):
@@ -131,7 +131,7 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'ori x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'ori x{rd}, x{rs1}, {int(imm)}')
 
     def exec_ANDI(self, instr, log_info: LogInfo):
         imm = Decoder.imm_I(instr)
@@ -141,4 +141,4 @@ class ITypeStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_rs1(rs1, self.cpu.get(rs1))
-        log_info.set_disassembly(f'andi x{rd}, x{rs1}, {imm}')
+        log_info.set_disassembly(f'andi x{rd}, x{rs1}, {int(imm)}')
