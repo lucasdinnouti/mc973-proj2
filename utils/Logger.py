@@ -76,7 +76,6 @@ class Logger:
 
     def __init__(self, log_file) -> None:
         log_file = log_file.replace('.riscv', '')
-        log_file = log_file.replace('.c', '')
         log_file = log_file.replace('.bin', '')
 
         self.file = log_file + '.log'

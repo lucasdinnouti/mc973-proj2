@@ -1,11 +1,11 @@
 # RISC-V - SIMULATOR
 
-## Requisites
+## Requirements
 
-Before running the simulor, make sure you have these apps installed.
+Before running the simulator, make sure you have these dependencies installed.
 
 * Python3
-* riscv64-unknown-elf-objcopy
+* riscv64-linux-gnu-objcopy
 
 ## Programs
 
@@ -15,7 +15,7 @@ Reference: https://drive.google.com/drive/u/1/folders/1ei8E-qk2dwQvCWJv8ovGJiIdL
 
 ## Running for all test programs
 
-To make it easier, you can run the simulator for all programs in a folter.
+To make it easier, you can run the simulator for all programs in a folder.
 
 ```
 ./run.sh <FOLDER>
@@ -33,7 +33,7 @@ The output log files will be saved in the ./test folder.
 
 ### Convert program files to .bin
 
-The simulator expects to read binary files. To convert the given elf file, please run the convertion script:
+The simulator expects to read binary files. To convert the given elf file, please run the conversion script:
 
 ```
 ./convert.sh
