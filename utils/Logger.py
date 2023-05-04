@@ -37,8 +37,8 @@ class LogInfo:
         self.rs2_value = self.to_hex(rs2_value)
 
     def set_disassembly(self, disassembly):
-        for register in REGISTER_NAMES:
-            disassembly = disassembly.replace(register, REGISTER_NAMES[register])
+        for (register, name) in REGISTER_NAMES:
+            disassembly = disassembly.replace(register, name)
 
         # pad instructions for them to line up
         disassembly = disassembly.split(' ')[0].ljust(7) + ' ' + ' '.join(disassembly.split(' ')[1:])
