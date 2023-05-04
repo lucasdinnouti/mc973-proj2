@@ -9,8 +9,6 @@ class JALStrategy(ExecutionStrategy):
     def exec_JAL(self, instr, log_info: LogInfo):
         imm = Decoder.imm_J(instr)
         rd = Decoder.rd(instr)
-        
-        self.cpu.pc -= 4 # TODO Check if nedeed
 
         self.cpu.set(rd, self.cpu.pc + 4)
         self.cpu.pc = self.cpu.pc + imm
@@ -20,3 +18,5 @@ class JALStrategy(ExecutionStrategy):
 
         log_info.set_rd(rd, self.cpu.get(rd))
         log_info.set_disassembly(f'jal x{rd}, {int(imm)}')
+
+        self.cpu.pc -= 4 # TODO Check if nedeed

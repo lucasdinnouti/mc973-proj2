@@ -11,8 +11,6 @@ class JALRStrategy(ExecutionStrategy):
         rd = Decoder.rd(instr)
         rs1 = Decoder.rs1(instr)
         
-        self.cpu.pc -= 4 # TODO Check if nedeed
-
         rs1_value = self.cpu.get(rs1)
 
         self.cpu.set(rd, self.cpu.pc + 4)
@@ -22,4 +20,6 @@ class JALRStrategy(ExecutionStrategy):
             imm += 2**32
 
         log_info.set_rd(rd, self.cpu.get(rd))
-        log_info.set_disassembly(f'JALR x{rd}, {int(imm)}')
+        log_info.set_disassembly(f'JALR x{rd}, {int(imm)}({rs1})')
+
+        self.cpu.pc -= 4 # TODO Check if nedeed
